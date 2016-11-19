@@ -35,14 +35,18 @@ try {
 	// I think this blocks on response?
 	$response = $client->request('GET', "/forecast/".$key."/".$location);
 
-	//echo $response->getBody();
+
 
 	$result = json_decode($response->getBody(), true);
 
 	$dailyForecast = $result["daily"];
-	$temperatureMax = $dailyForecast->data->temperatureMax;
+	$data = $dailyForecast["data"];
+	$temperatureMax = $data[0]["temperatureMax"];
+	$timestamp = $data[0]["timestamp"];
+	$tempartureMin = $data[0]["temperatureMin"];
+	$windSpeed = $data[0]["windSpeed"];
 
-	echo "Max Temp: ".$temperatureMax." degF";
+
 
 
 
