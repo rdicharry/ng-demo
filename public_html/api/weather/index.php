@@ -18,15 +18,35 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 
-$currentWeather = Weather::getCurrentWeather();
-
 try {
 
+// determines which HTTP method needs to be processed
+$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
+
+// todo grab data from front end (location) for specific request
+// this comes from "get" request $location = filter_input(INPUT_GET, "location", FILTER_VALIDATE_STRING/FLOAT);
 
 
+	if($method === "GET"){
+		// set XSRF cookie
+		setXsrfCookie("/");
 
+		$currentWeather = Weather::getCurrentWeatherAlbuquerque();
+		$reply->data = $currentWeather;
 
+	} else {
+		throw (new InvalidArgumentException("Invalid HTTP method request"));
+	}
 
 } catch (\Exception $e) {
+	$reply->status = $e->getCode();
+	$reply->message = $e->getMessage();
 	throw new Exception($e->getMessage());
 }
+
+header("Access-Control-Allow-Origin: *");
+header("Content-type: application/json");
+if($reply->data === null){
+	unset($reply->data);
+}
+echo json_encode($reply);
