@@ -3,16 +3,16 @@
   "version": "1.0.0",
   "license": "Apache-2.0",
   "author": {
-    "name": "R Lewis",
-    "email": "rlewis37@cnm.edu",
-    "url": "https://bootcamp-coders.cnm.edu/~rlewis37/ng-demo"
+    "name": "R Dicharry",
+    "email": "rdicharry@cnm.edu",
+    "url": "https://bootcamp-coders.cnm.edu/~rdicharry/ng-demo"
   },
   "scripts": {
     "build": "rimraf public_html/dist && tsc && webpack --config webpack/webpack.live.js --progress --profile --bail"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rlewis2892/ng-demo.git"
+    "url": "https://github.com/rdicharry/ng-demo.git"
   },
   "dependencies": {
     "@angular/common": "~2.1.1",
