@@ -16,9 +16,9 @@ use GuzzleHttp\Client;
  */
 class Weather implements JsonSerializable {
 
-	private $temperatureMax;
-
 	private $temperatureMin;
+
+	private $temperatureMax;
 
 	private $windSpeed;
 
@@ -32,7 +32,7 @@ class Weather implements JsonSerializable {
 	 * @param $timestamp int the time associated with this forecast.
 	 * @throws Exception
 	 */
-	public function __construct($temperatureMax, $temperatureMin, $windSpeed,int $timestamp){
+	public function __construct($temperatureMin, $temperatureMax, $windSpeed,int $timestamp){
 		try{
 			$this->setTemperatureMax($temperatureMax);
 			$this->setTemperatureMin($temperatureMin);
