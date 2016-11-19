@@ -1,4 +1,8 @@
 <?php
+require_once(dirname(__DIR__,3)."/vendor/autoload.php");
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+
+use GuzzleHttp\Client;
 
 /**
  * Class Weather
@@ -100,7 +104,51 @@ class Weather implements JsonSerializable {
 		$this->timestamp = $time;
 	}
 
+	/**
+	 * Get the current daily weather forecase for Albuquerque from darksky.net
+	 * @return Weather a weather object with current conditions
+	 */
+	public static function getCurrentWeatherAlbuquerque(){
+
+		$config = readConfig("/etc/apache2/capstone-mysql/growify.ini");
+
+		$key = $config["darksky"];
+		$location = "35.0853,106.6056";
+
+		$base_url = "https://api.darksky.net/forecast";
+
+		$client = new Client([
+			'base_uri'=>$base_url,
+			'timeout'=>2.0
+		]);
+
+		// send a request to darksky via https
+		// I think this blocks on response?
+		$response = $client->request('GET', "/forecast/".$key."/".$location);
 
 
+
+		$result = json_decode($response->getBody(), true);
+
+		$dailyForecast = $result["daily"];
+		$data = $dailyForecast["data"];
+		$temperatureMax = $data[0]["temperatureMax"];
+		$timestamp = $data[0]["timestamp"];
+		$temperatureMin = $data[0]["temperatureMin"];
+		$windSpeed = $data[0]["windSpeed"];
+
+		$newWeather = new \Weather($temperatureMin, $temperatureMax, $windSpeed, $timestamp);
+
+		return $newWeather;
+	}
+
+	/**
+	 * Specifies the JSON serialized version of this object.
+	 * @return array array containing all public fields of Weather.
+	 */
+	function jsonSerialize() {
+		return(get_object_vars($this));
+		// note - if the date is represented as a DateTime rather than an int timestamp, we will need to do a little more work here.
+	}
 
 }
