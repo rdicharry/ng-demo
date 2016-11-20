@@ -5,8 +5,8 @@ import {WeatherComponent} from "./components/weather-components";
 export const allAppComponents = [WeatherComponent, HomeComponent];
 
 export const routes: Routes = [
-	{path: "", component: HomeComponent},
-	{path: "weather", component: WeatherComponent}
+	{path: "weather", component: WeatherComponent},
+	{path: "", component: HomeComponent}
 ];
 
 export const appRoutingProviders: any[] = [];
