@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__DIR__,4)."/vendor/autoload.php");
+require_once(dirname(__DIR__,2)."/vendor/autoload.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use GuzzleHttp\Client;
@@ -113,7 +113,7 @@ class Weather implements JsonSerializable {
 		$config = readConfig("/etc/apache2/capstone-mysql/growify.ini");
 
 		$key = $config["darksky"];
-		$location = "35.0853,106.6056";
+		$location = "35.0853,-106.6056"; //TODO pass in as parameter
 
 		$base_url = "https://api.darksky.net/forecast";
 
@@ -133,9 +133,11 @@ class Weather implements JsonSerializable {
 		$dailyForecast = $result["daily"];
 		$data = $dailyForecast["data"];
 		$temperatureMax = $data[0]["temperatureMax"];
-		$timestamp = $data[0]["timestamp"];
+		$timestamp = $data[0]["time"];
 		$temperatureMin = $data[0]["temperatureMin"];
 		$windSpeed = $data[0]["windSpeed"];
+
+		//echo "tmin = ".$temperatureMin ." tmax = ".$temperatureMax ." wind = ".$windSpeed . " time = ".$timestamp;
 
 		$newWeather = new \Weather($temperatureMin, $temperatureMax, $windSpeed, $timestamp);
 

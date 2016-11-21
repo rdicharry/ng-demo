@@ -3,6 +3,7 @@
 		<div class="jumbotron text-center">
 			<h1>Welcome to the Angular 2 Demo!</h1>
 			<p class="lead">This is a "simple" lol app to display weather data. Enjoy!</p>
+			<a routerLink="/weather">Weather</a>
 		</div>
 	</div>
 </section>

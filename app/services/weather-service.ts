@@ -11,7 +11,7 @@ export class WeatherService extends BaseService {
 		super(http);
 	}
 
-	private weatherUrl = "/api/weather/";
+	private weatherUrl = "api/weather/";
 
 	getCurrentWeatherAlbuquerque() : Observable<Weather>{
 		return(this.http.get(this.weatherUrl)
